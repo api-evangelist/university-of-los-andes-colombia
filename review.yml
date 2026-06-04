@@ -1,0 +1,43 @@
+---
+name: University of Los Andes Colombia
+description: University of Los Andes Colombia public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-los-andes-colombia/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Uniandes has no dedicated public developer portal or documented open API
+      program. The only confirmed public machine-readable surface is the DSpace
+      "Seneca" institutional repository, which is documented (via the ROAR registry
+      and library) as exposing OAI-PMH and a DSpace REST API; however, both the
+      repository root and its OAI/REST paths returned HTTP 403 to automated clients
+      during this review (likely bot mitigation), so they are listed as
+      conditionally available rather than verified-live. The MiBanner SIS is an
+      authentication-gated Ellucian Banner login. The github.com/uniandes
+      organization exists but exposes no public repositories and its official status
+      is unconfirmed, so it was not cataloged. No endpoints were fabricated; only the
+      publicly documented repository paths are listed.
+    endpoints:
+      - url: https://www.uniandes.edu.co/
+        status: 200
+        note: Official institutional website; no public developer/API resources surfaced.
+      - url: https://repositorio.uniandes.edu.co/
+        status: 403
+        note: DSpace "Seneca" repository root; publicly documented but blocks automated clients.
+      - url: https://repositorio.uniandes.edu.co/oai/request
+        status: 403
+        note: OAI-PMH interface per ROAR registry; returned 403 to curl/automated agent.
+      - url: https://repositorio.uniandes.edu.co/server/api
+        status: 403
+        note: Expected DSpace REST API path; returned 403 to automated agent.
+      - url: https://registroapps.uniandes.edu.co/MiBanner9/
+        status: 200
+        note: Ellucian Banner (MiBanner) SIS login; authentication-gated, no public API docs.
+      - url: https://github.com/uniandes
+        status: 200
+        note: GitHub org exists but has no public repositories; official status unconfirmed.
+      - url: https://co.linkedin.com/school/universidad-de-los-andes/
+        status: 200
+        note: Official LinkedIn school page.
