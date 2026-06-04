@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "dspace": "https://www.uniandes.edu.co/ns/dspace#",
+    "oai": "http://www.openarchives.org/OAI/2.0/",
+    "@vocab": "https://schema.org/",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "foundingDate": "schema:foundingDate",
+    "location": "schema:location",
+    "sameAs": "schema:sameAs",
+    "Institution": {
+      "@id": "schema:CollegeOrUniversity",
+      "@type": "@id"
+    },
+    "Repository": {
+      "@id": "dspace:Repository",
+      "@type": "@id"
+    },
+    "Community": {
+      "@id": "dspace:Community",
+      "@type": "@id"
+    },
+    "Collection": {
+      "@id": "dspace:Collection",
+      "@type": "@id"
+    },
+    "Item": {
+      "@id": "dspace:Item",
+      "@type": "@id"
+    },
+    "handle": "dspace:handle",
+    "metadata": "dspace:metadata",
+    "title": "schema:name",
+    "author": "schema:author",
+    "datePublished": "schema:datePublished",
+    "identifier": "schema:identifier",
+    "isPartOf": {
+      "@id": "schema:isPartOf",
+      "@type": "@id"
+    },
+    "hasPart": {
+      "@id": "schema:hasPart",
+      "@type": "@id"
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "Universidad de los Andes",
+  "url": "https://www.uniandes.edu.co/",
+  "description": "Private research university in Bogota, Colombia, founded in 1948.",
+  "foundingDate": "1948",
+  "location": {
+    "@type": "Place",
+    "name": "Bogota, Colombia"
+  },
+  "sameAs": [
+    "https://co.linkedin.com/school/universidad-de-los-andes/",
+    "https://www.wikidata.org/wiki/Q1816826"
+  ]
+}

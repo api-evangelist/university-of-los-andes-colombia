@@ -1,0 +1,14 @@
+{
+  "repo": "university-of-los-andes-colombia",
+  "feeds": [
+    {
+      "source": "https://www.uniandes.edu.co/es/noticias",
+      "feed_url": "https://www.uniandes.edu.co/es/noticias",
+      "title": "Noticias Universidad de los Andes",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}
