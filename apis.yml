@@ -60,6 +60,8 @@ apis:
       - type: Documentation
         url: https://repositorio.uniandes.edu.co/
 common:
+  - type: DomainSecurity
+    url: security/university-of-los-andes-colombia-domain-security.yml
   - type: Website
     url: https://www.uniandes.edu.co/
   - type: LinkedIn
