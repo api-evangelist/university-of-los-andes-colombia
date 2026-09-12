@@ -2,18 +2,26 @@
   "repo": "university-of-los-andes-colombia",
   "feeds": [
     {
-      "source": "https://www.uniandes.edu.co/es/noticias",
-      "feed_url": "https://www.uniandes.edu.co/es/noticias",
-      "title": "Noticias Universidad de los Andes",
+      "source": "https://agora.uniandes.edu.co/",
+      "feed_url": "https://agora.uniandes.edu.co/blog/feed/",
+      "title": "",
       "saved": 0,
-      "method": "html-scrape",
-      "error": "parse_failed",
-      "nature": "undetermined",
-      "nature_basis": null
+      "method": "discovered"
+    },
+    {
+      "source": "https://co.linkedin.com/school/universidad-de-los-andes/",
+      "error": "HTTPError"
+    },
+    {
+      "source": "https://www.uniandes.edu.co/es/noticias",
+      "feed_url": "https://www.uniandes.edu.co/es/taxonomy/term/46796/feed",
+      "title": "",
+      "saved": 10,
+      "method": "discovered"
     }
   ],
-  "post_count": 11,
-  "fetched": "2026-08-30T22:05:13Z",
+  "post_count": 21,
+  "fetched": "2026-09-06T19:17:18Z",
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined."
