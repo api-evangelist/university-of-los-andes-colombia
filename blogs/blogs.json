@@ -13,15 +13,22 @@
       "error": "HTTPError"
     },
     {
-      "source": "https://www.uniandes.edu.co/es/noticias",
+      "source": "https://agora.uniandes.edu.co/blog/feed/",
+      "feed_url": "https://agora.uniandes.edu.co/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.uniandes.edu.co/es/taxonomy/term/46796/feed",
       "feed_url": "https://www.uniandes.edu.co/es/taxonomy/term/46796/feed",
       "title": "",
-      "saved": 10,
-      "method": "discovered"
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "post_count": 21,
-  "fetched": "2026-09-06T19:17:18Z",
+  "post_count": 31,
+  "fetched": "2026-09-13T13:00:00Z",
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined."
