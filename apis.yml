@@ -1,24 +1,21 @@
----
 aid: university-of-los-andes-colombia
 name: University of Los Andes Colombia
 x-type: university
 x-category: Private Research University
-description: >-
-  Universidad de los Andes (Uniandes) is a private research university in Bogota, Colombia, founded
-  in 1948 and ranked #179 in the QS World University Rankings 2025. Like most universities it is a
-  federation of buyers rather than a producer of APIs: it publishes no developer portal, no API key
+description: 'Universidad de los Andes (Uniandes) is a private research university in Bogota, Colombia,
+  founded in 1948 and ranked #179 in the QS World University Rankings 2025. Like most universities it
+  is a federation of buyers rather than a producer of APIs: it publishes no developer portal, no API key
   programme, no OpenAPI of its own and no public API documentation of any kind. What it does operate,
-  on its own registrable domain, is one genuinely public machine-readable surface — an OAI-PMH 2.0
-  metadata harvesting endpoint for the Revistas Uniandes journal portal, which answers anonymous
-  automated clients across all six protocol verbs and serves the university's own journals. Its
-  second institutional repository, the DSpace 7 deployment "Seneca", sits behind a bot-detection
-  challenge that returns 403 to automated clients; an undocumented host at api.uniandes.edu.co
-  exists but is closed by a Cloudflare WAF on every path. Beyond that, the university's programmable
-  footprint is relationships rather than engineering: a Microsoft Entra ID tenant that is its own
-  SAML 2.0 and OpenID Connect identity provider, DOI registrations at both Crossref and DataCite,
-  a ROR record, an OCLC CONTENTdm heritage collection and a D2L Brightspace LMS. Those are real
-  institutional facts and are catalogued here as such, each carrying an x-operator that says who
-  actually runs the thing — none of the vendors' contracts are attributed to Uniandes.
+  on its own registrable domain, is one genuinely public machine-readable surface — an OAI-PMH 2.0 metadata
+  harvesting endpoint for the Revistas Uniandes journal portal, which answers anonymous automated clients
+  across all six protocol verbs and serves the university''s own journals. Its second institutional repository,
+  the DSpace 7 deployment "Seneca", sits behind a bot-detection challenge that returns 403 to automated
+  clients; an undocumented host at api.uniandes.edu.co exists but is closed by a Cloudflare WAF on every
+  path. Beyond that, the university''s programmable footprint is relationships rather than engineering:
+  a Microsoft Entra ID tenant that is its own SAML 2.0 and OpenID Connect identity provider, DOI registrations
+  at both Crossref and DataCite, a ROR record, an OCLC CONTENTdm heritage collection and a D2L Brightspace
+  LMS. Those are real institutional facts and are catalogued here as such, each carrying an x-operator
+  that says who actually runs the thing — none of the vendors'' contracts are attributed to Uniandes.'
 type: Index
 deliveryModel:
   model: saas
@@ -48,342 +45,361 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-los-andes-colombia.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-los-andes-colombia/refs/heads/main/apis.yml
 tags:
-  - University
-  - Higher Education
-  - Education
-  - Colombia
-  - Latin America
-  - Private Research University
-  - Open Access
-  - Institutional Repository
-  - Research Data
-  - Scholarly Publishing
-  - OAI-PMH
-  - Identity Federation
-  - Library
-  - Research
+- University
+- Higher Education
+- Education
+- Colombia
+- Latin America
+- Private Research University
+- Open Access
+- Institutional Repository
+- Research Data
+- Scholarly Publishing
+- OAI-PMH
+- Identity Federation
+- Library
+- Research
 created: '2026-06-03'
-modified: '2026-09-01'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
-  - aid: university-of-los-andes-colombia:revistas-oai
-    name: Revistas Uniandes - OAI-PMH
-    x-operator: institution
-    description: >-
-      OAI-PMH 2.0 metadata harvesting interface for the Revistas Uniandes scholarly journal portal —
-      the only Universidad de los Andes surface found that serves an anonymous automated client real
-      data. Verified live on 2026-09-01: all six verbs return HTTP 200, ListSets enumerates 100 sets
-      across the portal's journals, ListRecords returns 566KB of oai_dc, and four metadata formats
-      are advertised (oai_dc, marcxml, oai_marc, rfc1807). The Identify response names
-      revistas.uniandes.edu.co as the repository identifier and gestionrevistas@uniandes.edu.co as
-      the administrative contact. Each journal also exposes its own baseURL, e.g. /index.php/res/oai
-      for Revista de Estudios Sociales. The host is the university's; the software underneath is
-      Open Journal Systems 3.4.0.10 by the Public Knowledge Project, whose product specification is
-      deliberately not catalogued here — OAI-PMH is an Open Archives Initiative protocol, and what
-      is credited to Uniandes is the deployment, not the protocol and not the software.
-    humanURL: https://revistas.uniandes.edu.co/
-    baseURL: https://revistas.uniandes.edu.co/index.php/index/oai
-    tags: [ OAI-PMH, Scholarly Publishing, Open Access, Metadata, Journals, Research ]
-    properties:
-      - type: OpenAPI
-        url: openapi/university-of-los-andes-colombia-revistas-oai-pmh-openapi.yml
-      - type: Documentation
-        url: https://revistas.uniandes.edu.co/
-      - type: Authentication
-        url: authentication/university-of-los-andes-colombia-authentication.yml
-      - type: Conformance
-        url: conformance/university-of-los-andes-colombia-conformance.yml
-  - aid: university-of-los-andes-colombia:revistas-rest
-    name: Revistas Uniandes - OJS REST API
-    x-operator: institution
-    description: >-
-      The Open Journal Systems v1 REST API on the university's own journal host. Present and
-      answering — /index.php/{journal}/api/v1/* returns a structured JSON 403
-      ({"error":"api.403.unauthorized"}) rather than a 404 — but every path requires an API token
-      issued by a journal editor, and no public token-request path is documented. Recorded as an
-      institution-operated deployment that is authentication-gated. The contract itself is PKP's
-      product specification, not the university's, and is not saved here.
-    humanURL: https://revistas.uniandes.edu.co/
-    baseURL: https://revistas.uniandes.edu.co/index.php/index/api/v1
-    tags: [ REST, Scholarly Publishing, Journals, Authenticated ]
-    properties:
-      - type: Documentation
-        url: https://revistas.uniandes.edu.co/
-      - type: Authentication
-        url: authentication/university-of-los-andes-colombia-authentication.yml
-  - aid: university-of-los-andes-colombia:agora-wp-rest
-    name: Agora Uniandes - WordPress REST API
-    x-operator: institution
-    description: >-
-      Agora is the university's community and news site, running on its own host and serving a
-      publicly readable WordPress REST API discovery document at /wp-json/ (HTTP 200, ~326KB of
-      JSON naming every registered namespace and route) plus an RSS 2.0 feed at /feed/ (HTTP 200).
-      Institution-operated and anonymously readable. As with the journal portal, the route contract
-      belongs to WordPress core rather than to Uniandes, so no product specification is saved — only
-      the deployment is recorded. Notable because the university's main site was unavailable at
-      review time while this host stayed up.
-    humanURL: https://agora.uniandes.edu.co/
-    baseURL: https://agora.uniandes.edu.co/wp-json
-    tags: [ REST, WordPress, News, Content, Community ]
-    properties:
-      - type: Documentation
-        url: https://agora.uniandes.edu.co/
-      - type: BlogRSS
-        url: https://agora.uniandes.edu.co/feed/
-  - aid: university-of-los-andes-colombia:repositorio-oai
-    name: Repositorio Institucional Seneca - OAI-PMH
-    x-operator: institution
-    description: >-
-      OAI-PMH metadata harvesting interface for "Seneca", the DSpace 7 institutional repository that
-      collects the university's open-access scholarly output. The host is the university's own.
-      Re-probed 2026-09-01 under a browser User-Agent: the request 302s to /challenge and then
-      answers HTTP 403 with a "Bot Detection" body. That is live-and-defended, not dead — a WAF is
-      actively configured in front of a running DSpace. Harvesting requires coordination with the
-      library. The repository's holdings are independently evidenced: 9,987 DataCite DOIs under
-      prefix 10.57784 resolve to repositorio.uniandes.edu.co/entities/publication/.
-    humanURL: https://repositorio.uniandes.edu.co/
-    baseURL: https://repositorio.uniandes.edu.co/oai/request
-    tags: [ OAI-PMH, Institutional Repository, DSpace, Open Access, Metadata, Research ]
-    properties:
-      - type: Documentation
-        url: https://repositorio.uniandes.edu.co/
-  - aid: university-of-los-andes-colombia:repositorio-rest
-    name: Repositorio Institucional Seneca - DSpace REST API
-    x-operator: institution
-    description: >-
-      DSpace 7 REST API for the "Seneca" repository, under the /server/api path of the deployment.
-      Confirmed to be DSpace 7 by the Angular entity URLs its DOIs resolve to. Re-probed 2026-09-01
-      under a browser User-Agent and, like the OAI endpoint, redirected to a bot-detection challenge
-      and returned HTTP 403. Institution-hosted and conditionally available; the DSpace contract
-      itself belongs to LYRASIS/DuraSpace and is not saved here.
-    humanURL: https://repositorio.uniandes.edu.co/
-    baseURL: https://repositorio.uniandes.edu.co/server/api
-    tags: [ REST, Institutional Repository, DSpace, Open Access, Research ]
-    properties:
-      - type: Documentation
-        url: https://repositorio.uniandes.edu.co/
-  - aid: university-of-los-andes-colombia:api-gateway
-    name: api.uniandes.edu.co
-    x-operator: institution
-    description: >-
-      An undocumented API host on the university's own registrable domain. It resolves through
-      Cloudflare and answers HTTP 403 with the Cloudflare WAF "Attention Required!" page on every
-      path attempted — /, /docs, /swagger, /openapi.json, /api-docs, /health, /v1 and
-      /.well-known/openapi. The 403 is a configured block rather than an unconfigured hostname, so
-      something is being served behind it, but nothing about what it serves is publicly
-      discoverable. Recorded as a finding, not as a usable API: no endpoint, schema or capability is
-      claimed for it because none could be observed.
-    humanURL: https://api.uniandes.edu.co/
-    baseURL: https://api.uniandes.edu.co
-    tags: [ Gateway, Undocumented, Access Restricted ]
-  - aid: university-of-los-andes-colombia:entra-identity-federation
-    name: Universidad de los Andes Identity Provider (Microsoft Entra ID)
-    x-operator: federation
-    description: >-
-      The university's own SAML 2.0 and OpenID Connect identity provider, hosted as Microsoft Entra
-      ID tenant fabd047c-ff48-492a-8bbb-8f98b9fb9cca. A federation is shared by definition, but the
-      IdP behind it is the institution's, and this is among the strongest institution-operated
-      machine-readable surfaces the university has. Tenant ownership was verified independently of
-      any name match: getuserrealm.srf for user@uniandes.edu.co returns DomainName uniandes.edu.co,
-      NameSpaceType Managed and FederationBrandName "Universidad de los Andes". SAML metadata (HTTP
-      200, 28KB) carries entityID https://sts.windows.net/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/ with
-      HTTP-Redirect and HTTP-POST SSO bindings; OIDC discovery resolves by the university's own
-      domain name. Observed in production use — the Brightspace LMS redirects to this tenant's
-      /saml2 endpoint. No Shibboleth IdP exists and uniandes.edu.co is not in the eduGAIN entity
-      list; this tenant is the federation.
-    humanURL: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
-    baseURL: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca
-    tags: [ Identity Federation, SAML, OpenID Connect, Single Sign-On, Entra ID ]
-    properties:
-      - type: Authentication
-        url: authentication/university-of-los-andes-colombia-authentication.yml
-      - type: Conformance
-        url: conformance/university-of-los-andes-colombia-conformance.yml
-      - type: Documentation
-        url: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
-  - aid: university-of-los-andes-colombia:patrimonio-contentdm
-    name: Patrimonio Documental y Bibliografico - CONTENTdm
-    x-operator: tenant
-    description: >-
-      The university's digital heritage and rare-materials collection, on an institution-specific
-      subdomain that CNAMEs to cdm22043.contentdm.oclc.org — an OCLC CONTENTdm tenancy, site 22043.
-      The tenancy is a real institutional fact and its APIs answer anonymously: /digital/api/collections
-      returns 10 named collections (HTTP 200), the dmwebservices endpoint
-      /digital/bl/dmwebservices/index.php?q=dmGetCollectionList/json returns the same list (HTTP 200),
-      and an OAI-PMH 2.0 endpoint at /oai/oai.php reports repositoryName "Patrimonio documental y
-      bibliografico - Universidad de Los Andes" with adminEmail patrimoniosisbibli@uniandes.edu.co
-      (HTTP 200). The collection, the metadata and the DOIs are Uniandes'; the server and the
-      contract are OCLC's, which is why the relationship is recorded and OCLC's specification is not
-      saved under this institution.
-    humanURL: https://patrimoniodocumental.uniandes.edu.co/
-    baseURL: https://patrimoniodocumental.uniandes.edu.co/digital/api
-    tags: [ Digital Collections, Cultural Heritage, CONTENTdm, OAI-PMH, Library, Tenant ]
-    properties:
-      - type: Documentation
-        url: https://patrimoniodocumental.uniandes.edu.co/
-  - aid: university-of-los-andes-colombia:bloqueneon-brightspace
-    name: Bloque Neon - D2L Brightspace LMS
-    x-operator: tenant
-    description: >-
-      The university's learning management system, "Bloque Neon", on an institution-specific
-      subdomain that CNAMEs to uniandes.brightspace.com — a D2L Brightspace tenancy. Unauthenticated
-      requests redirect to the university's own Entra ID tenant with a SAMLRequest, which is how the
-      identity federation above was discovered. Brightspace exposes the D2L Valence API, but that
-      contract is D2L's product and is not saved here, and no LTI or platform-configuration document
-      is publicly readable at the university's subdomain, so no LTI conformance is claimed. The
-      tenancy itself is recorded because it is a real institutional surface.
-    humanURL: https://bloqueneon.uniandes.edu.co/
-    tags: [ Learning Management System, Brightspace, D2L, Tenant, Authenticated ]
-  - aid: university-of-los-andes-colombia:crossref-member
-    name: Crossref Member 11812 - Universidad de los Andes
-    x-operator: registry
-    description: >-
-      DOI registration membership at Crossref. Member 11812, primary-name "Universidad de los
-      Andes", location "Bogota, Colombia", with eight prefixes — 10.7440, 10.13043, 10.53010,
-      10.29263, 10.16924, 10.18175, 10.25025, 10.18389 — and 7,697 total DOIs (848 current, 6,849
-      backfile). Registered imprint names include Revista de Estudios Sociales, Revista de
-      Ingenieria, Colombia Internacional, Vicerrectoria de Investigacion y Creacion and Facultad de
-      Artes y Humanidades. A registry is shared because many institutions register DOIs; that is a
-      fact about Uniandes, not a misattribution. The membership is recorded; Crossref's own API
-      contract is not saved under this institution.
-    humanURL: https://www.crossref.org/
-    baseURL: https://api.crossref.org/members/11812
-    tags: [ DOI, Crossref, Registry, Scholarly Publishing, Persistent Identifiers ]
-  - aid: university-of-los-andes-colombia:datacite-member
-    name: DataCite Consortium Organization UDLAC - Universidad de los Andes Colombia
-    x-operator: registry
-    description: >-
-      DOI registration membership at DataCite. Consortium organization UDLAC, displayName
-      "Universidad de los Andes - Colombia", operating two repository clients. IGJZ.MNJGJS —
-      "Repositorios Digitales Uniandes", domains *.uniandes.edu.co, prefix 10.57784, registered
-      2022, 9,987 DOIs. UDLAC.MVBGXO — "Ecosistema de Publicaciones en Acceso Abierto Universidad de
-      los Andes", prefix 10.71590, registered 2025, 2,285 DOIs. Ownership was verified by resolution
-      rather than by name match: sampled DOIs under both prefixes resolve to
-      repositorio.uniandes.edu.co and patrimoniodocumental.uniandes.edu.co, which rules out the
-      similarly named Universidad de los Andes in Chile and in Venezuela. DataCite's own API
-      contract is not saved under this institution.
-    humanURL: https://datacite.org/
-    baseURL: https://api.datacite.org/providers/udlac
-    tags: [ DOI, DataCite, Registry, Research Data, Persistent Identifiers ]
-  - aid: university-of-los-andes-colombia:ror-record
-    name: ROR 02mhbdp94 - Universidad de los Andes
-    x-operator: registry
-    description: >-
-      Research Organization Registry record for the institution. ROR ID 02mhbdp94, established 1948,
-      declared domain uniandes.edu.co, with cross-registry identifiers Funder Registry 501100006070,
-      GRID grid.7247.6, ISNI 0000 0004 1937 0714 and Wikidata Q1569421. Machine-readable via the ROR
-      API and used here as the canonical anchor for disambiguating this institution from the other
-      universities sharing the name. The registration is the institution's; ROR's API contract is
-      not saved under it.
-    humanURL: https://ror.org/02mhbdp94
-    baseURL: https://api.ror.org/organizations/02mhbdp94
-    tags: [ ROR, Registry, Research Identifiers, Persistent Identifiers ]
-common:
-  - type: Website
-    url: https://www.uniandes.edu.co/
-  - type: LinkedIn
-    url: https://co.linkedin.com/school/universidad-de-los-andes/
-  - type: Blog
+- aid: university-of-los-andes-colombia:revistas-rest
+  name: Revistas Uniandes - OJS REST API
+  x-operator: institution
+  description: The Open Journal Systems v1 REST API on the university's own journal host. Present and
+    answering — /index.php/{journal}/api/v1/* returns a structured JSON 403 ({"error":"api.403.unauthorized"})
+    rather than a 404 — but every path requires an API token issued by a journal editor, and no public
+    token-request path is documented. Recorded as an institution-operated deployment that is authentication-gated.
+    The contract itself is PKP's product specification, not the university's, and is not saved here.
+  humanURL: https://revistas.uniandes.edu.co/
+  baseURL: https://revistas.uniandes.edu.co/index.php/index/api/v1
+  tags:
+  - REST
+  - Scholarly Publishing
+  - Journals
+  - Authenticated
+  properties:
+  - type: Documentation
+    url: https://revistas.uniandes.edu.co/
+  - type: Authentication
+    url: authentication/university-of-los-andes-colombia-authentication.yml
+- aid: university-of-los-andes-colombia:agora-wp-rest
+  name: Agora Uniandes - WordPress REST API
+  x-operator: institution
+  description: Agora is the university's community and news site, running on its own host and serving
+    a publicly readable WordPress REST API discovery document at /wp-json/ (HTTP 200, ~326KB of JSON naming
+    every registered namespace and route) plus an RSS 2.0 feed at /feed/ (HTTP 200). Institution-operated
+    and anonymously readable. As with the journal portal, the route contract belongs to WordPress core
+    rather than to Uniandes, so no product specification is saved — only the deployment is recorded. Notable
+    because the university's main site was unavailable at review time while this host stayed up.
+  humanURL: https://agora.uniandes.edu.co/
+  baseURL: https://agora.uniandes.edu.co/wp-json
+  tags:
+  - REST
+  - WordPress
+  - News
+  - Content
+  - Community
+  properties:
+  - type: Documentation
     url: https://agora.uniandes.edu.co/
   - type: BlogRSS
     url: https://agora.uniandes.edu.co/feed/
-  - type: LibraryCatalog
-    url: https://biblioteca.uniandes.edu.co/
-  - type: ResearchRepository
+- aid: university-of-los-andes-colombia:repositorio-oai
+  name: Repositorio Institucional Seneca - OAI-PMH
+  x-operator: institution
+  description: 'OAI-PMH metadata harvesting interface for "Seneca", the DSpace 7 institutional repository
+    that collects the university''s open-access scholarly output. The host is the university''s own. Re-probed
+    2026-09-01 under a browser User-Agent: the request 302s to /challenge and then answers HTTP 403 with
+    a "Bot Detection" body. That is live-and-defended, not dead — a WAF is actively configured in front
+    of a running DSpace. Harvesting requires coordination with the library. The repository''s holdings
+    are independently evidenced: 9,987 DataCite DOIs under prefix 10.57784 resolve to repositorio.uniandes.edu.co/entities/publication/.'
+  humanURL: https://repositorio.uniandes.edu.co/
+  baseURL: https://repositorio.uniandes.edu.co/oai/request
+  tags:
+  - OAI-PMH
+  - Institutional Repository
+  - DSpace
+  - Open Access
+  - Metadata
+  - Research
+  properties:
+  - type: Documentation
     url: https://repositorio.uniandes.edu.co/
-  - type: ResearchRepository
-    url: https://revistas.uniandes.edu.co/
-  - type: IdentityFederation
-    url: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+- aid: university-of-los-andes-colombia:repositorio-rest
+  name: Repositorio Institucional Seneca - DSpace REST API
+  x-operator: institution
+  description: DSpace 7 REST API for the "Seneca" repository, under the /server/api path of the deployment.
+    Confirmed to be DSpace 7 by the Angular entity URLs its DOIs resolve to. Re-probed 2026-09-01 under
+    a browser User-Agent and, like the OAI endpoint, redirected to a bot-detection challenge and returned
+    HTTP 403. Institution-hosted and conditionally available; the DSpace contract itself belongs to LYRASIS/DuraSpace
+    and is not saved here.
+  humanURL: https://repositorio.uniandes.edu.co/
+  baseURL: https://repositorio.uniandes.edu.co/server/api
+  tags:
+  - REST
+  - Institutional Repository
+  - DSpace
+  - Open Access
+  - Research
+  properties:
+  - type: Documentation
+    url: https://repositorio.uniandes.edu.co/
+- aid: university-of-los-andes-colombia:api-gateway
+  name: api.uniandes.edu.co
+  x-operator: institution
+  description: 'An undocumented API host on the university''s own registrable domain. It resolves through
+    Cloudflare and answers HTTP 403 with the Cloudflare WAF "Attention Required!" page on every path attempted
+    — /, /docs, /swagger, /openapi.json, /api-docs, /health, /v1 and /.well-known/openapi. The 403 is
+    a configured block rather than an unconfigured hostname, so something is being served behind it, but
+    nothing about what it serves is publicly discoverable. Recorded as a finding, not as a usable API:
+    no endpoint, schema or capability is claimed for it because none could be observed.'
+  humanURL: https://api.uniandes.edu.co/
+  baseURL: https://api.uniandes.edu.co
+  tags:
+  - Gateway
+  - Undocumented
+  - Access Restricted
+- aid: university-of-los-andes-colombia:entra-identity-federation
+  name: Universidad de los Andes Identity Provider (Microsoft Entra ID)
+  x-operator: federation
+  description: 'The university''s own SAML 2.0 and OpenID Connect identity provider, hosted as Microsoft
+    Entra ID tenant fabd047c-ff48-492a-8bbb-8f98b9fb9cca. A federation is shared by definition, but the
+    IdP behind it is the institution''s, and this is among the strongest institution-operated machine-readable
+    surfaces the university has. Tenant ownership was verified independently of any name match: getuserrealm.srf
+    for user@uniandes.edu.co returns DomainName uniandes.edu.co, NameSpaceType Managed and FederationBrandName
+    "Universidad de los Andes". SAML metadata (HTTP 200, 28KB) carries entityID https://sts.windows.net/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/
+    with HTTP-Redirect and HTTP-POST SSO bindings; OIDC discovery resolves by the university''s own domain
+    name. Observed in production use — the Brightspace LMS redirects to this tenant''s /saml2 endpoint.
+    No Shibboleth IdP exists and uniandes.edu.co is not in the eduGAIN entity list; this tenant is the
+    federation.'
+  humanURL: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+  baseURL: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca
+  tags:
+  - Identity Federation
+  - SAML
+  - OpenID Connect
+  - Single Sign-On
+  - Entra ID
+  properties:
   - type: Authentication
     url: authentication/university-of-los-andes-colombia-authentication.yml
   - type: Conformance
     url: conformance/university-of-los-andes-colombia-conformance.yml
+  - type: Documentation
+    url: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+- aid: university-of-los-andes-colombia:patrimonio-contentdm
+  name: Patrimonio Documental y Bibliografico - CONTENTdm
+  x-operator: tenant
+  description: 'The university''s digital heritage and rare-materials collection, on an institution-specific
+    subdomain that CNAMEs to cdm22043.contentdm.oclc.org — an OCLC CONTENTdm tenancy, site 22043. The
+    tenancy is a real institutional fact and its APIs answer anonymously: /digital/api/collections returns
+    10 named collections (HTTP 200), the dmwebservices endpoint /digital/bl/dmwebservices/index.php?q=dmGetCollectionList/json
+    returns the same list (HTTP 200), and an OAI-PMH 2.0 endpoint at /oai/oai.php reports repositoryName
+    "Patrimonio documental y bibliografico - Universidad de Los Andes" with adminEmail patrimoniosisbibli@uniandes.edu.co
+    (HTTP 200). The collection, the metadata and the DOIs are Uniandes''; the server and the contract
+    are OCLC''s, which is why the relationship is recorded and OCLC''s specification is not saved under
+    this institution.'
+  humanURL: https://patrimoniodocumental.uniandes.edu.co/
+  baseURL: https://patrimoniodocumental.uniandes.edu.co/digital/api
+  tags:
+  - Digital Collections
+  - Cultural Heritage
+  - CONTENTdm
+  - OAI-PMH
+  - Library
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://patrimoniodocumental.uniandes.edu.co/
+- aid: university-of-los-andes-colombia:bloqueneon-brightspace
+  name: Bloque Neon - D2L Brightspace LMS
+  x-operator: tenant
+  description: The university's learning management system, "Bloque Neon", on an institution-specific
+    subdomain that CNAMEs to uniandes.brightspace.com — a D2L Brightspace tenancy. Unauthenticated requests
+    redirect to the university's own Entra ID tenant with a SAMLRequest, which is how the identity federation
+    above was discovered. Brightspace exposes the D2L Valence API, but that contract is D2L's product
+    and is not saved here, and no LTI or platform-configuration document is publicly readable at the university's
+    subdomain, so no LTI conformance is claimed. The tenancy itself is recorded because it is a real institutional
+    surface.
+  humanURL: https://bloqueneon.uniandes.edu.co/
+  tags:
+  - Learning Management System
+  - Brightspace
+  - D2L
+  - Tenant
+  - Authenticated
+- aid: university-of-los-andes-colombia:crossref-member
+  name: Crossref Member 11812 - Universidad de los Andes
+  x-operator: registry
+  description: DOI registration membership at Crossref. Member 11812, primary-name "Universidad de los
+    Andes", location "Bogota, Colombia", with eight prefixes — 10.7440, 10.13043, 10.53010, 10.29263,
+    10.16924, 10.18175, 10.25025, 10.18389 — and 7,697 total DOIs (848 current, 6,849 backfile). Registered
+    imprint names include Revista de Estudios Sociales, Revista de Ingenieria, Colombia Internacional,
+    Vicerrectoria de Investigacion y Creacion and Facultad de Artes y Humanidades. A registry is shared
+    because many institutions register DOIs; that is a fact about Uniandes, not a misattribution. The
+    membership is recorded; Crossref's own API contract is not saved under this institution.
+  humanURL: https://www.crossref.org/
+  baseURL: https://api.crossref.org/members/11812
+  tags:
+  - DOI
+  - Crossref
+  - Registry
+  - Scholarly Publishing
+  - Persistent Identifiers
+- aid: university-of-los-andes-colombia:datacite-member
+  name: DataCite Consortium Organization UDLAC - Universidad de los Andes Colombia
+  x-operator: registry
+  description: 'DOI registration membership at DataCite. Consortium organization UDLAC, displayName "Universidad
+    de los Andes - Colombia", operating two repository clients. IGJZ.MNJGJS — "Repositorios Digitales
+    Uniandes", domains *.uniandes.edu.co, prefix 10.57784, registered 2022, 9,987 DOIs. UDLAC.MVBGXO —
+    "Ecosistema de Publicaciones en Acceso Abierto Universidad de los Andes", prefix 10.71590, registered
+    2025, 2,285 DOIs. Ownership was verified by resolution rather than by name match: sampled DOIs under
+    both prefixes resolve to repositorio.uniandes.edu.co and patrimoniodocumental.uniandes.edu.co, which
+    rules out the similarly named Universidad de los Andes in Chile and in Venezuela. DataCite''s own
+    API contract is not saved under this institution.'
+  humanURL: https://datacite.org/
+  baseURL: https://api.datacite.org/providers/udlac
+  tags:
+  - DOI
+  - DataCite
+  - Registry
+  - Research Data
+  - Persistent Identifiers
+- aid: university-of-los-andes-colombia:ror-record
+  name: ROR 02mhbdp94 - Universidad de los Andes
+  x-operator: registry
+  description: Research Organization Registry record for the institution. ROR ID 02mhbdp94, established
+    1948, declared domain uniandes.edu.co, with cross-registry identifiers Funder Registry 501100006070,
+    GRID grid.7247.6, ISNI 0000 0004 1937 0714 and Wikidata Q1569421. Machine-readable via the ROR API
+    and used here as the canonical anchor for disambiguating this institution from the other universities
+    sharing the name. The registration is the institution's; ROR's API contract is not saved under it.
+  humanURL: https://ror.org/02mhbdp94
+  baseURL: https://api.ror.org/organizations/02mhbdp94
+  tags:
+  - ROR
+  - Registry
+  - Research Identifiers
+  - Persistent Identifiers
+- aid: university-of-los-andes-colombia:university-of-los-andes-colombia-oai-pmh-api
+  name: University of Los Andes Colombia OAI PMH API
+  description: Open Archives Initiative Protocol for Metadata Harvesting 2.0 verbs.
+  humanURL: https://revistas.uniandes.edu.co/
+  baseURL: https://revistas.uniandes.edu.co/index.php/index/oai
+  tags:
+  - OAI-PMH
+  properties:
   - type: OpenAPI
-    url: openapi/university-of-los-andes-colombia-revistas-oai-pmh-openapi.yml
-  - type: DomainSecurity
-    url: security/university-of-los-andes-colombia-domain-security.yml
-  - type: Plans
-    url: plans/university-of-los-andes-colombia-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/university-of-los-andes-colombia-rate-limits.yml
-  - type: FinOps
-    url: finops/university-of-los-andes-colombia-finops.yml
-  - type: Review
-    url: review.yml
+    url: openapi/university-of-los-andes-colombia-oai-pmh-api-openapi.yml
+  - type: Documentation
+    url: https://revistas.uniandes.edu.co/
+  - type: Authentication
+    url: authentication/university-of-los-andes-colombia-authentication.yml
+  - type: Conformance
+    url: conformance/university-of-los-andes-colombia-conformance.yml
+common:
+- type: Website
+  url: https://www.uniandes.edu.co/
+- type: LinkedIn
+  url: https://co.linkedin.com/school/universidad-de-los-andes/
+- type: Blog
+  url: https://agora.uniandes.edu.co/
+- type: BlogRSS
+  url: https://agora.uniandes.edu.co/feed/
+- type: LibraryCatalog
+  url: https://biblioteca.uniandes.edu.co/
+- type: ResearchRepository
+  url: https://repositorio.uniandes.edu.co/
+- type: ResearchRepository
+  url: https://revistas.uniandes.edu.co/
+- type: IdentityFederation
+  url: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+- type: Authentication
+  url: authentication/university-of-los-andes-colombia-authentication.yml
+- type: Conformance
+  url: conformance/university-of-los-andes-colombia-conformance.yml
+- type: OpenAPI
+  url: openapi/_original/university-of-los-andes-colombia-revistas-oai-pmh-openapi.yml
+- type: DomainSecurity
+  url: security/university-of-los-andes-colombia-domain-security.yml
+- type: Plans
+  url: plans/university-of-los-andes-colombia-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/university-of-los-andes-colombia-rate-limits.yml
+- type: FinOps
+  url: finops/university-of-los-andes-colombia-finops.yml
+- type: Review
+  url: review.yml
 x-coverage:
   state: gated
   reason: bot_blocked
-  detail: >-
-    Universidad de los Andes operates no public developer portal, no API key programme and no
-    OpenAPI of its own, and this profile does not pad that absence. Real probing found one
-    anonymously readable institution-operated surface — the Revistas Uniandes OAI-PMH 2.0 endpoint,
-    live across all six verbs — plus a WordPress REST discovery document on the Agora news host.
-    Everything else the institution runs on its own domain is closed to automated clients rather
-    than absent: the DSpace 7 "Seneca" repository returns a bot-detection challenge and 403 on both
-    its OAI and REST paths even under a browser User-Agent, api.uniandes.edu.co answers with a
-    Cloudflare WAF block on every path tried, and the OJS REST API returns a structured 403 needing
-    an editor-issued token. Coverage is therefore gated by bot mitigation on the institution's own
-    infrastructure, not by the institution publishing nothing. Two further notes on the state of the
-    estate at review time: the main website www.uniandes.edu.co and every path under it redirect to
-    mantenimiento.uniandes.edu.co, a branded maintenance page, on three consecutive attempts — the
-    Website pointer is retained because it is the canonical institutional domain serving the
-    institution's own page, but the site itself was not serving content; and the news feed
-    previously harvested from www.uniandes.edu.co/es/noticias is dead for the same reason, which is
-    why the Blog pointer has been moved to agora.uniandes.edu.co, whose RSS feed is live. Beyond the
-    institution's own hosts the footprint is relationships: an Entra ID tenant that is the
-    university's own SAML/OIDC identity provider, Crossref and DataCite DOI registrations, a ROR
-    record, an OCLC CONTENTdm tenancy and a D2L Brightspace tenancy. Those are recorded with
-    x-operator federation, registry and tenant; none of those vendors' or registries' contracts are
-    saved under this institution. No searched-and-not-found surface has been invented: DNS for
-    idp/shibboleth/sso/auth/datos/datosabiertos/developer/hpc/cris/scienti under uniandes.edu.co is
-    NXDOMAIN, cursos and horario return 404, adfs and exacore resolve but filter TCP 80/443 from the
-    public internet, and the github.com/uniandes organization has zero public repositories.
+  detail: 'Universidad de los Andes operates no public developer portal, no API key programme and no OpenAPI
+    of its own, and this profile does not pad that absence. Real probing found one anonymously readable
+    institution-operated surface — the Revistas Uniandes OAI-PMH 2.0 endpoint, live across all six verbs
+    — plus a WordPress REST discovery document on the Agora news host. Everything else the institution
+    runs on its own domain is closed to automated clients rather than absent: the DSpace 7 "Seneca" repository
+    returns a bot-detection challenge and 403 on both its OAI and REST paths even under a browser User-Agent,
+    api.uniandes.edu.co answers with a Cloudflare WAF block on every path tried, and the OJS REST API
+    returns a structured 403 needing an editor-issued token. Coverage is therefore gated by bot mitigation
+    on the institution''s own infrastructure, not by the institution publishing nothing. Two further notes
+    on the state of the estate at review time: the main website www.uniandes.edu.co and every path under
+    it redirect to mantenimiento.uniandes.edu.co, a branded maintenance page, on three consecutive attempts
+    — the Website pointer is retained because it is the canonical institutional domain serving the institution''s
+    own page, but the site itself was not serving content; and the news feed previously harvested from
+    www.uniandes.edu.co/es/noticias is dead for the same reason, which is why the Blog pointer has been
+    moved to agora.uniandes.edu.co, whose RSS feed is live. Beyond the institution''s own hosts the footprint
+    is relationships: an Entra ID tenant that is the university''s own SAML/OIDC identity provider, Crossref
+    and DataCite DOI registrations, a ROR record, an OCLC CONTENTdm tenancy and a D2L Brightspace tenancy.
+    Those are recorded with x-operator federation, registry and tenant; none of those vendors'' or registries''
+    contracts are saved under this institution. No searched-and-not-found surface has been invented: DNS
+    for idp/shibboleth/sso/auth/datos/datosabiertos/developer/hpc/cris/scienti under uniandes.edu.co is
+    NXDOMAIN, cursos and horario return 404, adfs and exacore resolve but filter TCP 80/443 from the public
+    internet, and the github.com/uniandes organization has zero public repositories.'
   evidence:
-    - url: https://revistas.uniandes.edu.co/index.php/index/oai?verb=Identify
-      status: 200
-    - url: https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListRecords&metadataPrefix=oai_dc
-      status: 200
-    - url: https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListSets
-      status: 200
-    - url: https://revistas.uniandes.edu.co/index.php/index/api/v1/contexts
-      status: 403
-    - url: https://agora.uniandes.edu.co/wp-json/
-      status: 200
-    - url: https://agora.uniandes.edu.co/feed/
-      status: 200
-    - url: https://repositorio.uniandes.edu.co/oai/request?verb=Identify
-      status: 403
-    - url: https://repositorio.uniandes.edu.co/server/api
-      status: 403
-    - url: https://api.uniandes.edu.co/
-      status: 403
-    - url: https://api.uniandes.edu.co/openapi.json
-      status: 403
-    - url: https://www.uniandes.edu.co/
-      status: 200
-    - url: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
-      status: 200
-    - url: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
-      status: 200
-    - url: https://patrimoniodocumental.uniandes.edu.co/oai/oai.php?verb=Identify
-      status: 200
-    - url: https://patrimoniodocumental.uniandes.edu.co/digital/api/collections
-      status: 200
-    - url: https://bloqueneon.uniandes.edu.co/
-      status: 200
-    - url: https://api.crossref.org/members/11812
-      status: 200
-    - url: https://api.datacite.org/providers/udlac
-      status: 200
-    - url: https://api.ror.org/organizations?query=Universidad%20de%20los%20Andes%20Colombia
-      status: 200
-    - url: https://biblioteca.uniandes.edu.co/
-      status: 200
-    - url: https://cursos.uniandes.edu.co/
-      status: 404
-    - url: https://api.github.com/orgs/uniandes
-      status: 200
+  - url: https://revistas.uniandes.edu.co/index.php/index/oai?verb=Identify
+    status: 200
+  - url: https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListRecords&metadataPrefix=oai_dc
+    status: 200
+  - url: https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListSets
+    status: 200
+  - url: https://revistas.uniandes.edu.co/index.php/index/api/v1/contexts
+    status: 403
+  - url: https://agora.uniandes.edu.co/wp-json/
+    status: 200
+  - url: https://agora.uniandes.edu.co/feed/
+    status: 200
+  - url: https://repositorio.uniandes.edu.co/oai/request?verb=Identify
+    status: 403
+  - url: https://repositorio.uniandes.edu.co/server/api
+    status: 403
+  - url: https://api.uniandes.edu.co/
+    status: 403
+  - url: https://api.uniandes.edu.co/openapi.json
+    status: 403
+  - url: https://www.uniandes.edu.co/
+    status: 200
+  - url: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+    status: 200
+  - url: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+    status: 200
+  - url: https://patrimoniodocumental.uniandes.edu.co/oai/oai.php?verb=Identify
+    status: 200
+  - url: https://patrimoniodocumental.uniandes.edu.co/digital/api/collections
+    status: 200
+  - url: https://bloqueneon.uniandes.edu.co/
+    status: 200
+  - url: https://api.crossref.org/members/11812
+    status: 200
+  - url: https://api.datacite.org/providers/udlac
+    status: 200
+  - url: https://api.ror.org/organizations?query=Universidad%20de%20los%20Andes%20Colombia
+    status: 200
+  - url: https://biblioteca.uniandes.edu.co/
+    status: 200
+  - url: https://cursos.uniandes.edu.co/
+    status: 404
+  - url: https://api.github.com/orgs/uniandes
+    status: 200
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
