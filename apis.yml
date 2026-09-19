@@ -157,6 +157,10 @@ apis:
   humanURL: https://api.uniandes.edu.co/
   baseURL: https://api.uniandes.edu.co
   tags:
+  - Gateways
+  - Undocumented
+  - Access Restricted
+  tags_raw:
   - Gateway
   - Undocumented
   - Access Restricted
@@ -176,6 +180,12 @@ apis:
   humanURL: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
   baseURL: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca
   tags:
+  - Identity Federation
+  - SAML
+  - OpenID Connect
+  - SSO
+  - Entra ID
+  tags_raw:
   - Identity Federation
   - SAML
   - OpenID Connect
@@ -208,6 +218,13 @@ apis:
   - CONTENTdm
   - OAI-PMH
   - Library
+  - Tenants
+  tags_raw:
+  - Digital Collections
+  - Cultural Heritage
+  - CONTENTdm
+  - OAI-PMH
+  - Library
   - Tenant
   properties:
   - type: Documentation
@@ -224,6 +241,12 @@ apis:
     surface.
   humanURL: https://bloqueneon.uniandes.edu.co/
   tags:
+  - Learning Management System
+  - Brightspace
+  - D2L
+  - Tenants
+  - Authenticated
+  tags_raw:
   - Learning Management System
   - Brightspace
   - D2L
