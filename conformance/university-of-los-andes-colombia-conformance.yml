@@ -1,0 +1,120 @@
+generated: '2026-09-01'
+method: probed
+source:
+- openapi/university-of-los-andes-colombia-revistas-oai-pmh-openapi.yml
+- https://revistas.uniandes.edu.co/index.php/index/oai?verb=Identify
+- https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+- https://api.crossref.org/members/11812
+- https://api.datacite.org/clients/igjz.mnjgjs
+- https://ror.org/02mhbdp94
+docs: https://revistas.uniandes.edu.co/
+note: >-
+  Conformance against the Kin Score `education` regime standards[], established by live probe on
+  2026-09-01 rather than by prose claim. Universidad de los Andes publishes no OpenAPI, no
+  developer portal and no conformance statement of its own, so every `conforms: true` below is
+  anchored to a machine-readable document that was actually fetched, with its status code recorded.
+  Standards in the regime with no evidence are recorded as `conforms: false` and say what was
+  looked for. Reward-only: nothing here is asserted to fill a slot.
+standards:
+- id: oai-pmh
+  conforms: true
+  operator: institution
+  evidence: >-
+    OAI-PMH 2.0 served live at https://revistas.uniandes.edu.co/index.php/index/oai (HTTP 200,
+    text/xml). `Identify` reports protocolVersion 2.0, repositoryIdentifier
+    `revistas.uniandes.edu.co`, adminEmail gestionrevistas@uniandes.edu.co, earliestDatestamp
+    2021-11-12T21:25:00Z, deletedRecord `persistent`, granularity YYYY-MM-DDThh:mm:ssZ, gzip and
+    deflate compression. All six verbs return 200 — ListSets enumerates 100 sets, ListRecords
+    returns 566,264 bytes of oai_dc. Four metadata formats are advertised: oai_dc, marcxml,
+    oai_marc, rfc1807. Per-journal baseURLs also live, e.g. /index.php/res/oai returns
+    repositoryName `Revista de Estudios Sociales`. Host is under the institution's own registrable
+    domain.
+- id: oai-pmh
+  conforms: true
+  operator: tenant
+  qualifier: contentdm
+  evidence: >-
+    A second OAI-PMH 2.0 endpoint at
+    https://patrimoniodocumental.uniandes.edu.co/oai/oai.php?verb=Identify (HTTP 200) reports
+    repositoryName `Patrimonio documental y bibliografico - Universidad de Los Andes`, adminEmail
+    patrimoniosisbibli@uniandes.edu.co, earliestDatestamp 2022-10-07. Recorded as `tenant`, not
+    `institution` — the host CNAMEs to cdm22043.contentdm.oclc.org and the software is OCLC
+    CONTENTdm. The collection and the metadata are the university's; the server is OCLC's.
+- id: saml
+  conforms: true
+  operator: federation
+  evidence: >-
+    SAML 2.0 IdP metadata for the university's own Microsoft Entra ID tenant
+    `fabd047c-ff48-492a-8bbb-8f98b9fb9cca` served at
+    https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+    (HTTP 200, text/xml, 28,441 bytes), entityID
+    `https://sts.windows.net/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/`, with SingleSignOnService
+    bindings for HTTP-Redirect and HTTP-POST at
+    https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/saml2. Tenant ownership
+    confirmed independently: https://login.microsoftonline.com/getuserrealm.srf?login=user@uniandes.edu.co&json=1
+    returns DomainName `uniandes.edu.co`, NameSpaceType `Managed`, FederationBrandName
+    `Universidad de los Andes`. Observed in use: https://bloqueneon.uniandes.edu.co/ issues a
+    SAMLRequest to that exact tenant endpoint.
+- id: shibboleth
+  conforms: false
+  evidence: >-
+    No Shibboleth IdP found. idp.uniandes.edu.co, shibboleth.uniandes.edu.co, sso.uniandes.edu.co
+    and auth.uniandes.edu.co are all NXDOMAIN. adfs.uniandes.edu.co resolves (157.253.237.232) but
+    TCP 443 and 80 are filtered from the public internet, so no metadata could be retrieved and no
+    claim is made about it. No entry for uniandes.edu.co was found in the eduGAIN entity list. The
+    institution's federation is Entra ID (see `saml`), not Shibboleth.
+- id: datacite
+  conforms: true
+  operator: registry
+  evidence: >-
+    DataCite consortium organization `UDLAC`, displayName `Universidad de los Andes - Colombia`,
+    memberType `consortium_organization` (https://api.datacite.org/providers/udlac, HTTP 200),
+    operating two repository clients. `IGJZ.MNJGJS` — `Repositorios Digitales Uniandes`, domains
+    `*.uniandes.edu.co`, prefix 10.57784, registered 2022, 9,987 DOIs. `UDLAC.MVBGXO` —
+    `Ecosistema de Publicaciones en Acceso Abierto Universidad de los Andes`, prefix 10.71590,
+    registered 2025, 2,285 DOIs. Ownership verified by resolution, not by name match: sampled DOIs
+    under both prefixes resolve to https://repositorio.uniandes.edu.co/entities/publication/... and
+    https://patrimoniodocumental.uniandes.edu.co/digital/collection/..., which rules out the
+    similarly named Universidad de los Andes in Chile and Venezuela.
+- id: crossref
+  conforms: true
+  operator: registry
+  evidence: >-
+    Crossref member 11812, primary-name `Universidad de los Andes`, location `Bogota, Colombia`
+    (https://api.crossref.org/members/11812, HTTP 200). Eight DOI prefixes — 10.7440, 10.13043,
+    10.53010, 10.29263, 10.16924, 10.18175, 10.25025, 10.18389 — and 7,697 total DOIs (848 current,
+    6,849 backfile). Registered imprint names include `Revista de Estudios Sociales`,
+    `Revista de Ingenieria`, `Vicerrectoria de Investigacion y Creacion` and
+    `Facultad de Artes y Humanidades`. 4,390 works under prefix 10.7440 alone.
+- id: orcid
+  conforms: false
+  evidence: >-
+    No institutional ORCID member record, ORCID-enabled login, or ORCID API integration was found
+    on any publicly reachable Uniandes host. Individual researcher ORCID iDs appear in Crossref
+    metadata, but that is a fact about the authors, not an institutional integration, and is not
+    claimed here.
+- id: scim
+  conforms: false
+  evidence: >-
+    No SCIM endpoint found. The Entra ID tenant supports SCIM as a Microsoft platform capability,
+    but no institution-scoped SCIM service URL is publicly discoverable and none is claimed.
+- id: lti
+  conforms: false
+  evidence: >-
+    The LMS at https://bloqueneon.uniandes.edu.co CNAMEs to uniandes.brightspace.com — a D2L
+    Brightspace tenant. Brightspace is an LTI-certified platform, but no LTI registration,
+    tool-configuration or platform-configuration document is publicly readable at the university's
+    subdomain, and the conformance would in any case belong to D2L's product rather than to the
+    institution. Recorded false rather than inferred from the vendor's certification.
+- id: oneroster
+  conforms: false
+  evidence: No OneRoster endpoint or claim found on any Uniandes host.
+- id: ed-fi
+  conforms: false
+  evidence: No Ed-Fi endpoint or claim found. Ed-Fi is a US K-12 standard and is not expected here.
+- id: caliper
+  conforms: false
+  evidence: No Caliper Analytics endpoint or claim found on any publicly reachable host.
+- id: qti
+  conforms: false
+  evidence: No QTI endpoint or claim found on any publicly reachable host.

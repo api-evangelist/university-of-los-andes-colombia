@@ -1,0 +1,289 @@
+# x-archived-from: university-of-los-andes-colombia-revistas-oai-pmh-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.2.0
+info:
+  title: Revistas Uniandes OAI-PMH
+  version: '2.0'
+  summary: OAI-PMH 2.0 metadata harvesting interface for the Universidad de los Andes journal portal.
+  description: >-
+    Machine-readable metadata harvesting interface for **Revistas Uniandes**, the scholarly journal
+    portal operated by Universidad de los Andes (Bogota, Colombia) at `revistas.uniandes.edu.co`.
+
+
+    This is the one **institution-operated** machine-readable surface at Uniandes that answers
+    anonymous automated clients with real data. The host sits under the university's own registrable
+    domain (`uniandes.edu.co`), the OAI `Identify` response names `revistas.uniandes.edu.co` as the
+    repository identifier and `gestionrevistas@uniandes.edu.co` as the administrative contact, and
+    the records served are the university's own journals — *Revista de Estudios Sociales*,
+    *Colombia Internacional*, *Antipoda*, *Revista de Ingenieria* and others. Operator is therefore
+    `institution`.
+
+
+    ## What this document is, and what it is not
+
+
+    The software behind the endpoint is **Open Journal Systems 3.4.0.10**, published by the Public
+    Knowledge Project — the `Identify` response says so in its `toolkit` description. OJS is not
+    Uniandes' engineering, and PKP's product specification is not catalogued here as Uniandes'
+    contract. What *is* Uniandes' is the deployment: their host, their journals, their editorial
+    operation, their administrative contact.
+
+
+    OAI-PMH itself is an **open protocol** published by the Open Archives Initiative, not a vendor
+    contract, which is why the interface can be described honestly without attributing anyone
+    else's specification to the university.
+
+
+    This document was **derived from live probes of the running endpoint** on 2026-09-01 — every
+    verb below returned HTTP 200 and was observed, including the protocol's error envelope. No
+    operation is described here that was not exercised. See `x-probe` on each operation.
+
+
+    ## Per-journal endpoints
+
+
+    The path below is the site-wide endpoint, which harvests every journal in the portal. Each
+    journal also exposes its own OAI baseURL at `/index.php/{journalPath}/oai` — for example
+    `/index.php/res/oai` returns `repositoryName: Revista de Estudios Sociales`. The site-wide
+    `ListSets` response enumerates 100 sets across the portal's journals.
+
+
+    ## Known metadata quirk
+
+
+    Record identifiers are returned in the form `oai:ojs2.www.y3ksoft.com:article/{id}`, carrying the
+    OAI identifier prefix of a **previous hosting arrangement** rather than the
+    `revistas.uniandes.edu.co` prefix that the `Identify` response advertises as the repository
+    identifier. Harvesters must therefore echo identifiers exactly as returned by
+    `ListIdentifiers`/`ListRecords` when calling `GetRecord`; constructing an identifier from the
+    advertised repository prefix returns `idDoesNotExist`. This is recorded as observed, not as a
+    defect claim.
+  contact:
+    name: Gestion de Revistas, Universidad de los Andes
+    email: gestionrevistas@uniandes.edu.co
+    url: https://revistas.uniandes.edu.co/
+  license:
+    name: Open Archives Initiative Protocol for Metadata Harvesting 2.0
+    url: http://www.openarchives.org/OAI/openarchivesprotocol.html
+servers:
+- url: https://revistas.uniandes.edu.co/index.php/index
+  description: Site-wide OAI-PMH endpoint covering every journal in the Revistas Uniandes portal.
+tags:
+- name: OAI-PMH
+  description: Open Archives Initiative Protocol for Metadata Harvesting 2.0 verbs.
+paths:
+  /oai:
+    get:
+      tags:
+      - OAI-PMH
+      operationId: oaiRequest
+      summary: Issue an OAI-PMH 2.0 request
+      description: >-
+        Single-entry OAI-PMH endpoint. The `verb` query parameter selects the operation. All six
+        protocol verbs were observed returning HTTP 200 with a well-formed `OAI-PMH` XML envelope;
+        protocol-level failures are also returned with HTTP 200 and an `<error code="...">` element,
+        which is the OAI-PMH convention rather than an HTTP status.
+      parameters:
+      - name: verb
+        in: query
+        required: true
+        description: The OAI-PMH verb to invoke.
+        schema:
+          type: string
+          enum:
+          - Identify
+          - ListMetadataFormats
+          - ListSets
+          - ListIdentifiers
+          - ListRecords
+          - GetRecord
+      - name: metadataPrefix
+        in: query
+        required: false
+        description: >-
+          Metadata format for `ListIdentifiers`, `ListRecords` and `GetRecord`. The formats below
+          were read from a live `ListMetadataFormats` response.
+        schema:
+          type: string
+          enum:
+          - oai_dc
+          - marcxml
+          - oai_marc
+          - rfc1807
+      - name: identifier
+        in: query
+        required: false
+        description: >-
+          Record identifier for `GetRecord`. Must be echoed exactly as returned by
+          `ListIdentifiers` or `ListRecords`.
+        schema:
+          type: string
+        examples:
+          observed:
+            value: oai:ojs2.www.y3ksoft.com:article/2
+      - name: set
+        in: query
+        required: false
+        description: Restrict a list request to one set, as enumerated by `ListSets`.
+        schema:
+          type: string
+        examples:
+          journal:
+            value: colombia-int
+      - name: from
+        in: query
+        required: false
+        description: >-
+          Lower bound on record datestamp. Granularity is `YYYY-MM-DDThh:mm:ssZ` per the `Identify`
+          response.
+        schema:
+          type: string
+          format: date-time
+      - name: until
+        in: query
+        required: false
+        description: Upper bound on record datestamp.
+        schema:
+          type: string
+          format: date-time
+      - name: resumptionToken
+        in: query
+        required: false
+        description: Continuation token returned by a truncated list response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: >-
+            A well-formed OAI-PMH envelope. Carries the requested payload on success, or an
+            `<error>` element with an OAI-PMH error code on a protocol-level failure.
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/OAIPMHEnvelope'
+      x-probe:
+        date: '2026-09-01'
+        method: probed
+        observed:
+        - verb: Identify
+          status: 200
+          bytes: 1985
+        - verb: ListMetadataFormats
+          status: 200
+          bytes: 1531
+        - verb: ListSets
+          status: 200
+          bytes: 51640
+        - verb: ListIdentifiers&metadataPrefix=oai_dc
+          status: 200
+          bytes: 102523
+        - verb: ListRecords&metadataPrefix=oai_dc
+          status: 200
+          bytes: 566264
+        - verb: GetRecord&metadataPrefix=oai_dc&identifier=oai:ojs2.www.y3ksoft.com:article/2
+          status: 200
+          bytes: 560
+        - verb: Bogus
+          status: 200
+          bytes: 537
+          error: badVerb
+components:
+  schemas:
+    OAIPMHEnvelope:
+      type: object
+      description: >-
+        Root `OAI-PMH` element in namespace `http://www.openarchives.org/OAI/2.0/`. Described
+        structurally; the wire format is XML validated against
+        `http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd`.
+      properties:
+        responseDate:
+          type: string
+          format: date-time
+          description: UTC timestamp of the response.
+        request:
+          type: string
+          format: uri
+          description: Echo of the baseURL, with the request arguments as attributes.
+        error:
+          $ref: '#/components/schemas/OAIError'
+        Identify:
+          $ref: '#/components/schemas/Identify'
+    Identify:
+      type: object
+      description: Values below were read from the live `Identify` response on 2026-09-01.
+      properties:
+        repositoryName:
+          type: string
+          examples:
+          - Revistas Uniandes
+        baseURL:
+          type: string
+          format: uri
+          examples:
+          - https://revistas.uniandes.edu.co/index.php/index/oai
+        protocolVersion:
+          type: string
+          examples:
+          - '2.0'
+        adminEmail:
+          type: string
+          format: email
+          examples:
+          - gestionrevistas@uniandes.edu.co
+        earliestDatestamp:
+          type: string
+          format: date-time
+          examples:
+          - '2021-11-12T21:25:00Z'
+        deletedRecord:
+          type: string
+          examples:
+          - persistent
+        granularity:
+          type: string
+          examples:
+          - YYYY-MM-DDThh:mm:ssZ
+        compression:
+          type: array
+          items:
+            type: string
+            enum:
+            - gzip
+            - deflate
+    OAIError:
+      type: object
+      description: >-
+        Protocol-level error. Returned with HTTP 200 per the OAI-PMH specification. `badVerb` and
+        `idDoesNotExist` were both observed live.
+      properties:
+        code:
+          type: string
+          enum:
+          - badArgument
+          - badResumptionToken
+          - badVerb
+          - cannotDisseminateFormat
+          - idDoesNotExist
+          - noRecordsMatch
+          - noMetadataFormats
+          - noSetHierarchy
+        message:
+          type: string
+x-operator: institution
+x-provenance:
+  generated: '2026-09-01'
+  method: derived
+  source:
+  - https://revistas.uniandes.edu.co/index.php/index/oai?verb=Identify
+  - https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListMetadataFormats
+  - https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListSets
+  - https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListIdentifiers&metadataPrefix=oai_dc
+  - https://revistas.uniandes.edu.co/index.php/index/oai?verb=ListRecords&metadataPrefix=oai_dc
+  - https://revistas.uniandes.edu.co/index.php/index/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:ojs2.www.y3ksoft.com:article/2
+  note: >-
+    Derived from live probes of the running endpoint on 2026-09-01, not from any published
+    specification. The university publishes no OpenAPI of its own. The underlying software is
+    Open Journal Systems 3.4.0.10 (Public Knowledge Project); PKP's product specification is
+    deliberately NOT catalogued here. OAI-PMH 2.0 is an Open Archives Initiative protocol, and
+    what is attributed to Universidad de los Andes is the deployment on its own host, not the
+    protocol and not the software.

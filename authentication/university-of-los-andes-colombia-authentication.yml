@@ -1,0 +1,102 @@
+generated: '2026-09-01'
+method: probed
+source:
+- https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+- https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+- https://login.microsoftonline.com/getuserrealm.srf?login=user@uniandes.edu.co&json=1
+- https://revistas.uniandes.edu.co/index.php/index/api/v1/contexts
+note: >-
+  Universidad de los Andes publishes no developer portal, no API key programme and no documented
+  authentication model for any public API. What it does operate is an institutional identity
+  provider — a Microsoft Entra ID tenant fronting uniandes.edu.co — whose SAML 2.0 and OpenID
+  Connect discovery documents are publicly machine-readable. Those are recorded below because they
+  are the institution's own identity surface, not because they authenticate a public API. The one
+  anonymous-readable institution surface (the OAI-PMH endpoint) requires no authentication at all.
+summary:
+  types:
+  - openIdConnect
+  - saml2
+  - none
+schemes:
+- name: entraIdOidc
+  type: openIdConnect
+  operator: federation
+  openIdConnectUrl: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+  description: >-
+    OpenID Connect discovery for the institution's Entra ID tenant. Resolvable by the university's
+    own domain name as well as by tenant GUID; both return issuer
+    https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/v2.0.
+  evidence:
+    url: https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+    status: 200
+    bytes: 1964
+  details:
+    issuer: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/v2.0
+    tenant_id: fabd047c-ff48-492a-8bbb-8f98b9fb9cca
+    tenant_region_scope: SA
+    authorization_endpoint: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/oauth2/v2.0/authorize
+    token_endpoint: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/oauth2/v2.0/token
+    jwks_uri: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/discovery/v2.0/keys
+    scopes_supported:
+    - openid
+    - profile
+    - email
+    - offline_access
+  sources:
+  - https://login.microsoftonline.com/uniandes.edu.co/v2.0/.well-known/openid-configuration
+- name: entraIdSaml2
+  type: saml2
+  operator: federation
+  description: >-
+    SAML 2.0 identity provider for uniandes.edu.co. Tenant ownership confirmed by
+    getuserrealm.srf, which returns FederationBrandName `Universidad de los Andes`, DomainName
+    `uniandes.edu.co`, NameSpaceType `Managed`. Observed in production use: the Brightspace LMS at
+    bloqueneon.uniandes.edu.co redirects unauthenticated visitors to this tenant's /saml2 endpoint
+    with a SAMLRequest.
+  evidence:
+    url: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+    status: 200
+    bytes: 28441
+  details:
+    entity_id: https://sts.windows.net/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/
+    metadata_url: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+    single_sign_on_service:
+    - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+      location: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/saml2
+    - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+      location: https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/saml2
+  sources:
+  - https://login.microsoftonline.com/fabd047c-ff48-492a-8bbb-8f98b9fb9cca/federationmetadata/2007-06/federationmetadata.xml
+  - https://login.microsoftonline.com/getuserrealm.srf?login=user@uniandes.edu.co&json=1
+- name: none
+  type: none
+  operator: institution
+  description: >-
+    The OAI-PMH endpoint at revistas.uniandes.edu.co takes no credential — all six verbs return
+    data to anonymous clients. This is the only Uniandes surface found that serves an automated
+    client without a credential or a challenge.
+  sources:
+  - openapi/university-of-los-andes-colombia-revistas-oai-pmh-openapi.yml
+gated:
+- surface: OJS REST API (revistas.uniandes.edu.co/index.php/{journal}/api/v1)
+  operator: institution
+  status: 403
+  body: '{"error":"api.403.unauthorized","errorMessage":"No esta autorizado para acceder al recurso solicitado."}'
+  note: >-
+    Present and answering, but every path requires an API token issued by a journal editor. No
+    public token-request path is documented. The contract itself is PKP's, not the university's.
+- surface: api.uniandes.edu.co
+  operator: institution
+  status: 403
+  note: >-
+    Cloudflare WAF ("Attention Required!") on every path tried, including /, /docs, /swagger,
+    /openapi.json, /api-docs, /health, /v1 and /.well-known/openapi. The host exists under the
+    institution's own domain and is protected rather than unconfigured, but nothing about what it
+    serves is publicly discoverable.
+- surface: repositorio.uniandes.edu.co (DSpace 7 "Seneca")
+  operator: institution
+  status: 403
+  note: >-
+    Bot-detection interstitial. A request to /oai/request or /server/api 302s to /challenge and
+    then answers 403 with a "Bot Detection" body, under a browser User-Agent as well as curl's.
+    Live and defended, not dead.
