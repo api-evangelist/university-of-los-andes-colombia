@@ -83,28 +83,20 @@ apis:
     url: https://revistas.uniandes.edu.co/
   - type: Authentication
     url: authentication/university-of-los-andes-colombia-authentication.yml
-- aid: university-of-los-andes-colombia:agora-wp-rest
-  name: Agora Uniandes - WordPress REST API
-  x-operator: institution
-  description: Agora is the university's community and news site, running on its own host and serving
-    a publicly readable WordPress REST API discovery document at /wp-json/ (HTTP 200, ~326KB of JSON naming
-    every registered namespace and route) plus an RSS 2.0 feed at /feed/ (HTTP 200). Institution-operated
-    and anonymously readable. As with the journal portal, the route contract belongs to WordPress core
-    rather than to Uniandes, so no product specification is saved — only the deployment is recorded. Notable
-    because the university's main site was unavailable at review time while this host stayed up.
-  humanURL: https://agora.uniandes.edu.co/
+- aid: university-of-los-andes-colombia:agora-uniandes-edu-co-website-wordpress-rest
+  name: University of Los Andes Colombia Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the University of Los Andes Colombia website
+    at agora.uniandes.edu.co: the route index of the site''s content management system, catalogued as
+    one site surface rather than as separate APIs.'
   baseURL: https://agora.uniandes.edu.co/wp-json
   tags:
-  - REST
   - WordPress
-  - News
-  - Content
-  - Community
+  x-surface: platform-generated
   properties:
   - type: Documentation
-    url: https://agora.uniandes.edu.co/
-  - type: BlogRSS
-    url: https://agora.uniandes.edu.co/feed/
+    url: https://agora.uniandes.edu.co/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 - aid: university-of-los-andes-colombia:repositorio-oai
   name: Repositorio Institucional Seneca - OAI-PMH
   x-operator: institution
