@@ -123,22 +123,6 @@ paths:
           error: badVerb
 components:
   schemas:
-    OAIPMHEnvelope:
-      type: object
-      description: Root `OAI-PMH` element in namespace `http://www.openarchives.org/OAI/2.0/`. Described structurally; the wire format is XML validated against `http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd`.
-      properties:
-        responseDate:
-          type: string
-          format: date-time
-          description: UTC timestamp of the response.
-        request:
-          type: string
-          format: uri
-          description: Echo of the baseURL, with the request arguments as attributes.
-        error:
-          $ref: '#/components/schemas/OAIError'
-        Identify:
-          $ref: '#/components/schemas/Identify'
     Identify:
       type: object
       description: Values below were read from the live `Identify` response on 2026-09-01.
@@ -198,6 +182,22 @@ components:
           - noSetHierarchy
         message:
           type: string
+    OAIPMHEnvelope:
+      type: object
+      description: Root `OAI-PMH` element in namespace `http://www.openarchives.org/OAI/2.0/`. Described structurally; the wire format is XML validated against `http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd`.
+      properties:
+        responseDate:
+          type: string
+          format: date-time
+          description: UTC timestamp of the response.
+        request:
+          type: string
+          format: uri
+          description: Echo of the baseURL, with the request arguments as attributes.
+        error:
+          $ref: '#/components/schemas/OAIError'
+        Identify:
+          $ref: '#/components/schemas/Identify'
 x-operator: institution
 x-provenance:
   generated: '2026-09-01'
